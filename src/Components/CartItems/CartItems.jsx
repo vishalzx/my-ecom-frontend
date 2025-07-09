@@ -4,6 +4,32 @@ import { ShopContext } from '../../Context/ShopContext'
 import remove_icon from '../Assets/cart_cross_icon.png'
 const CartItems = () => {
     const {all_product, cartItems, removeFromCart, getTotalCartAmount}= useContext(ShopContext);
+    const handlePayment = async () => {
+  const res = await fetch("https://my-ecom-backend.onrender.com/create-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: 500 }) // ₹500
+  });
+  const order = await res.json();
+
+  const options = {
+    key: "YOUR_PUBLIC_KEY",
+    amount: order.amount,
+    currency: order.currency,
+    name: "SHOPPER",
+    description: "Test Transaction",
+    order_id: order.id,
+    handler: function (response) {
+      alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+      console.log(response);
+    },
+    theme: { color: "#3399cc" },
+  };
+
+  const rzp = new window.Razorpay(options);
+  rzp.open();
+};
+
   return (
     <div className='cartitems'>
       <div className="cartitems-format-main">
@@ -52,7 +78,7 @@ const CartItems = () => {
                     <h3>${getTotalCartAmount()}</h3>
                 </div>
             </div>
-            <button>PROCEED TO CHECKOUT</button>
+            <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
         </div>
         <div className="cartitems-promocode">
             <p>If you have a promocode, enter it here</p>
