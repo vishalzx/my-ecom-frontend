@@ -8,7 +8,7 @@ const CartItems = () => {
   const res = await fetch("https://my-ecom-backend.onrender.com/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: 500 }) // ₹500
+    body: JSON.stringify({ amount:getTotalCartAmount() }) // ₹500
   });
   const order = await res.json();
 
