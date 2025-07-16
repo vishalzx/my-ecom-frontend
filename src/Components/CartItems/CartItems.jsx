@@ -13,7 +13,7 @@ const CartItems = () => {
   const order = await res.json();
 
   const options = {
-    key: "YOUR_PUBLIC_KEY",
+    key: "rzp_test_oP5bng744pk0Z3",
     amount: order.amount,
     currency: order.currency,
     name: "SHOPPER",
