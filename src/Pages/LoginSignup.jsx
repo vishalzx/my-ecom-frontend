@@ -38,7 +38,7 @@ const LoginSignup = () => {
     await fetch('https://my-ecom-backend.onrender.com/signup',{
       method: 'post',
       headers: {
-        "Accept": 'application/form-data',
+        "Accept": 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
