@@ -16,18 +16,19 @@ const ShopContextProvider=(props)=>{
         fetch('https://my-ecom-backend.onrender.com/allproducts')
         .then((response)=>response.json())
         .then((data)=>setAll_Product(data))
-
-        if(localStorage.getItem('auth-token')){
+        const token= localStorage.getItem('auth-token');
+        if(token){
             fetch('https://my-ecom-backend.onrender.com/getcart',{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
-                    'auth-token': localStorage.getItem('auth-token'),
+                    'auth-token': token,
                     'Content-Type': 'application/json'
                 },
                 body:""
             }).then((response)=>response.json())
             .then((data)=>setCartItems(data))
+            .catch((err)=> console.error("Cart fetch error:", err));
         }
     },[])
     
